@@ -1,4 +1,4 @@
-package org.yxs.plugin.utils;
+package org.yxs.plugin.support;
 
 import org.yxs.plugin.enums.DBType;
 
@@ -10,11 +10,12 @@ import java.util.Map;
  * explain:
  */
 public class TotalSQL {
+    public final static String DUAL_TABLE = "total";
     private static Map<String, String> SQL_POOL = new HashMap<>();
 
     static {
-        SQL_POOL.put(DBType.MYSQL.getName(), "select count(*) as total from (%s) $_paging");
-        SQL_POOL.put(DBType.ORACLE.getName(), "select count(*) as total from (%s)");
+        SQL_POOL.put(DBType.MYSQL.getName(), "select count(*) as " + DUAL_TABLE + " from (%s) $_paging");
+        SQL_POOL.put(DBType.ORACLE.getName(), "select count(*) as " + DUAL_TABLE + " from (%s)");
     }
 
     public static String get(String type) {
