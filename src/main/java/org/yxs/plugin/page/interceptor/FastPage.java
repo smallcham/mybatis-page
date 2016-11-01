@@ -1,4 +1,4 @@
-package org.yxs.plugin.interceptor;
+package org.yxs.plugin.page.interceptor;
 
 import org.apache.ibatis.executor.statement.BaseStatementHandler;
 import org.apache.ibatis.executor.statement.StatementHandler;
@@ -7,8 +7,8 @@ import org.apache.ibatis.mapping.MappedStatement;
 import org.apache.ibatis.plugin.*;
 import org.apache.ibatis.reflection.MetaObject;
 import org.apache.ibatis.reflection.SystemMetaObject;
-import org.yxs.plugin.enums.SettingKey;
-import org.yxs.plugin.support.Page;
+import org.yxs.plugin.page.enums.SettingKey;
+import org.yxs.plugin.page.support.Page;
 
 import java.sql.Connection;
 import java.util.Properties;

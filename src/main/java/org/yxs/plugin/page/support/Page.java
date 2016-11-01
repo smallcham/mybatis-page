@@ -1,4 +1,4 @@
-package org.yxs.plugin.support;
+package org.yxs.plugin.page.support;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -21,7 +21,7 @@ public class Page<E> extends ArrayList<E> {
 	
 	private long nextPage = 1;//第几页  初始为1
 	
-	private long pageCount;//需要分页的总记录数
+	private long rowCount;//需要分页的总记录数
 	
 	private long maxPage;//最大页数
 	
@@ -31,11 +31,11 @@ public class Page<E> extends ArrayList<E> {
 
 	/**
 	 * 计算分页逻辑(默认一页显示条数)
-	 * @param pageCount 总记录数
+	 * @param rowCount 总记录数
 	 * @param nextPage 第几页
 	 */
-	public Page(long pageCount, long nextPage) {
-		this(pageCount, nextPage, DEFAULT_PAGE_SIZE);
+	public Page(long rowCount, long nextPage) {
+		this(rowCount, nextPage, DEFAULT_PAGE_SIZE);
 	}
 
 	public Page(RowBounds rowBounds) {
@@ -44,15 +44,15 @@ public class Page<E> extends ArrayList<E> {
 
 	/**
 	 * 计算分页逻辑(自定义一页显示条数)
-	 * @param pageCount 总记录数
+	 * @param rowCount 总记录数
 	 * @param nextPage 第几页
 	 */
-	public Page(long pageCount, long nextPage, long pageSize) {
+	public Page(long rowCount, long nextPage, long pageSize) {
 		this.pageSize = pageSize;
-		this.pageCount = pageCount;
+		this.rowCount = rowCount;
 		
 		//计算最大页
-		this.maxPage = pageCount % this.pageSize == 0 ? pageCount / this.pageSize : pageCount / pageSize + 1;
+		this.maxPage = rowCount % this.pageSize == 0 ? rowCount / this.pageSize : rowCount / pageSize + 1;
 		
 		//计算当前需要从第几条开始分页
 		this.nextPage = nextPage < 1 ? this.nextPage = 1 : nextPage > this.maxPage ? this.maxPage : nextPage;
@@ -72,6 +72,10 @@ public class Page<E> extends ArrayList<E> {
 		return rowBounds(nextPage, DEFAULT_PAGE_SIZE, object);
 	}
 
+	public static RowBounds rowBounds(long nextPage) {
+		return rowBounds(nextPage, DEFAULT_PAGE_SIZE, null);
+	}
+
 	public static <E> Page<E> asPage(RowBounds rowBounds) {
 		return new Page<>(rowBounds);
 	}
@@ -80,10 +84,6 @@ public class Page<E> extends ArrayList<E> {
 		Page<E> page = new Page<>(rowBounds);
 		page.addAll(collection);
 		return page;
-	}
-
-	public static RowBounds rowBounds(long nextPage) {
-		return rowBounds(nextPage, DEFAULT_PAGE_SIZE, null);
 	}
 
 	public long getPageSize() {
@@ -102,12 +102,12 @@ public class Page<E> extends ArrayList<E> {
 		this.nextPage = nextPage;
 	}
 
-	public long getPageCount() {
-		return pageCount;
+	public long getRowCount() {
+		return rowCount;
 	}
 
-	public void setPageCount(long pageCount) {
-		this.pageCount = pageCount;
+	public void setRowCount(long rowCount) {
+		this.rowCount = rowCount;
 	}
 
 	public long getMaxPage() {

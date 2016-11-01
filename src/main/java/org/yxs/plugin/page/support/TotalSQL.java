@@ -1,6 +1,6 @@
-package org.yxs.plugin.support;
+package org.yxs.plugin.page.support;
 
-import org.yxs.plugin.enums.DBType;
+import org.yxs.plugin.page.enums.DBType;
 
 import java.util.HashMap;
 import java.util.Map;

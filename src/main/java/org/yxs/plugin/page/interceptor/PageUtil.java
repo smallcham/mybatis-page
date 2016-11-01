@@ -1,4 +1,4 @@
-package org.yxs.plugin.interceptor;
+package org.yxs.plugin.page.interceptor;
 
 import org.apache.ibatis.executor.parameter.ParameterHandler;
 import org.apache.ibatis.mapping.BoundSql;
@@ -6,13 +6,13 @@ import org.apache.ibatis.mapping.MappedStatement;
 import org.apache.ibatis.plugin.Invocation;
 import org.apache.ibatis.reflection.MetaObject;
 import org.apache.ibatis.scripting.defaults.DefaultParameterHandler;
-import org.yxs.plugin.enums.DBType;
-import org.yxs.plugin.exception.PageParamTypeException;
-import org.yxs.plugin.exception.UnknownSQLException;
-import org.yxs.plugin.support.Page;
-import org.yxs.plugin.support.PageSQL;
-import org.yxs.plugin.support.RowBounds;
-import org.yxs.plugin.support.TotalSQL;
+import org.yxs.plugin.page.enums.DBType;
+import org.yxs.plugin.page.exception.PageParamTypeException;
+import org.yxs.plugin.page.exception.UnknownSQLException;
+import org.yxs.plugin.page.support.Page;
+import org.yxs.plugin.page.support.PageSQL;
+import org.yxs.plugin.page.support.RowBounds;
+import org.yxs.plugin.page.support.TotalSQL;
 
 import java.lang.reflect.InvocationTargetException;
 import java.sql.Connection;
@@ -35,7 +35,7 @@ public class PageUtil {
     private static String DB_TYPE = DBType.MYSQL.getName();
     public static Long PAGE_SIZE = Page.DEFAULT_PAGE_SIZE;
 
-    public static long total(Invocation invocation, MappedStatement statement, BoundSql boundSql) throws SQLException {
+    static long total(Invocation invocation, MappedStatement statement, BoundSql boundSql) throws SQLException {
         String sql = boundSql.getSql();
         sql = TotalSQL.get(DBType.getName(DB_TYPE), sql);
         Connection connection = getConnection(invocation);
@@ -55,13 +55,13 @@ public class PageUtil {
         return 0;
     }
 
-    public static void page(MetaObject metaObject, BoundSql boundSql, Page<Object> page) throws InvocationTargetException, IllegalAccessException {
+    static void page(MetaObject metaObject, BoundSql boundSql, Page<Object> page) throws InvocationTargetException, IllegalAccessException {
         String sql = boundSql.getSql();
         sql = PageSQL.get(DB_TYPE, sql, page.getPageNum(), page.getPageSize());
         metaObject.setValue("boundSql.sql", sql);
     }
 
-    public static boolean isPaging(String methodId) {
+    static boolean isPaging(String methodId) {
         for (Pattern pattern : PATTERNS) {
             Matcher matcher = pattern.matcher(methodId);
             if (matcher.find()) return true;
@@ -69,41 +69,41 @@ public class PageUtil {
         return false;
     }
 
-    protected static void setMethods(String method) {
+    static void setMethods(String method) {
         if (isEmpty(method)) return;
         String[] methods = method.split(";");
-        for (int i = 0; i < methods.length; i++) {
-            PATTERNS.add(Pattern.compile(methods[i]));
+        for (String m: methods) {
+            PATTERNS.add(Pattern.compile(m));
         }
     }
 
-    protected static void setDbType(String dbType) {
+    static void setDbType(String dbType) {
         DB_TYPE = DBType.getName(dbType);
         if (DBType.UNKNOWN.getName().equals(DB_TYPE)) {
             throw new UnknownSQLException("not support the current sql");
         }
     }
 
-    protected static void setPageSize(String pageSize) {
+    static void setPageSize(String pageSize) {
         if (isEmpty(pageSize)) return;
         PAGE_SIZE = Long.valueOf(pageSize);
     }
 
     @SuppressWarnings("unchecked")
-    public static Page<Object> newPage(long total, Object paramObject) {
+    static Page<Object> newPage(long total, Object paramObject) {
         if (paramObject instanceof RowBounds) {
             RowBounds rowBounds = (RowBounds) paramObject;
             rowBounds.setRowCount(total);
             return new Page<>(rowBounds);
         }
-        throw new PageParamTypeException("the page param type must be org.yxs.plugin.support.RowBounds");
+        throw new PageParamTypeException("the page param type must be org.yxs.plugin.page.support.RowBounds");
     }
 
-    public static Connection getConnection(Invocation invocation) {
+    private static Connection getConnection(Invocation invocation) {
         return (Connection) invocation.getArgs()[0];
     }
 
-    public static boolean isEmpty(String str) {
+    private static boolean isEmpty(String str) {
         return (null == str || "".equals(str) || "".equals(str.replaceAll(" ", "")));
     }
 }

@@ -1,4 +1,4 @@
-package org.yxs.plugin.enums;
+package org.yxs.plugin.page.enums;
 
 /**
  * Created by medusa on 2016/10/21.

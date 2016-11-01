@@ -1,24 +1,27 @@
-package org.yxs.plugin.support;
+package org.yxs.plugin.page.support;
 
-import org.yxs.plugin.interceptor.PageUtil;
+import org.apache.ibatis.type.Alias;
+import org.yxs.plugin.page.interceptor.PageUtil;
 
 /**
  * Created by medusa on 2016/11/1.
  * explain:
  */
+
+@Alias("RowBounds")
 public class RowBounds {
     private long nextPage;
     private long pageSize = PageUtil.PAGE_SIZE;
     private long rowCount;
-    private Object object;
+    private Object v;
 
     public RowBounds(long nextPage) {
         this.nextPage = nextPage;
     }
 
-    public RowBounds(long nextPage, Object object) {
+    public RowBounds(long nextPage, Object v) {
         this.nextPage = nextPage;
-        this.object = object;
+        this.v = v;
     }
 
     public RowBounds(long nextPage, long pageSize) {
@@ -26,10 +29,10 @@ public class RowBounds {
         this.pageSize = pageSize;
     }
 
-    public RowBounds(long nextPage, long pageSize, Object object) {
+    public RowBounds(long nextPage, long pageSize, Object v) {
         this.nextPage = nextPage;
         this.pageSize = pageSize;
-        this.object = object;
+        this.v = v;
     }
 
     public long getNextPage() {
@@ -48,12 +51,12 @@ public class RowBounds {
         this.pageSize = pageSize;
     }
 
-    public Object getObject() {
-        return object;
+    public Object getV() {
+        return v;
     }
 
-    public void setObject(Object object) {
-        this.object = object;
+    public void setV(Object v) {
+        this.v = v;
     }
 
     public long getRowCount() {
