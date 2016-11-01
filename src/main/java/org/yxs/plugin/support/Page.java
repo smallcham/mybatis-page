@@ -1,6 +1,6 @@
 package org.yxs.plugin.support;
 
-import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -9,7 +9,7 @@ import java.util.List;
  * author 湛智
  * 时间：2014年9月16日
  */
-public class Page<E> implements Serializable {
+public class Page<E> extends ArrayList<E> {
 	/**
 	 * 
 	 */
@@ -27,8 +27,6 @@ public class Page<E> implements Serializable {
 	
 	private long pageNum;//从第几条开始查询分页
 	
-	private List<E> list;//分页返回的对象
-	
 	public Page() {}
 
 	/**
@@ -39,7 +37,11 @@ public class Page<E> implements Serializable {
 	public Page(long pageCount, long nextPage) {
 		this(pageCount, nextPage, DEFAULT_PAGE_SIZE);
 	}
-	
+
+	public Page(RowBounds rowBounds) {
+		this(rowBounds.getRowCount(), rowBounds.getNextPage(), rowBounds.getPageSize());
+	}
+
 	/**
 	 * 计算分页逻辑(自定义一页显示条数)
 	 * @param pageCount 总记录数
@@ -62,14 +64,26 @@ public class Page<E> implements Serializable {
 		this.pageNum = this.pageNum >= 0 ? this.pageNum : 0;
 	}
 
-	public Page<E> add(E e) {
-		list.add(e);
-		return this;
+	public static RowBounds rowBounds(long nextPage, long pageSize, Object object) {
+		return new RowBounds(nextPage, pageSize, object);
 	}
 
-	public Page<E> adds(Collection<? extends E> collection) {
-		list.addAll(collection);
-		return this;
+	public static RowBounds rowBounds(long nextPage, Object object) {
+		return rowBounds(nextPage, DEFAULT_PAGE_SIZE, object);
+	}
+
+	public static <E> Page<E> asPage(RowBounds rowBounds) {
+		return new Page<>(rowBounds);
+	}
+
+	public static <E> Page<E> asPage(RowBounds rowBounds, Collection<? extends E> collection) {
+		Page<E> page = new Page<>(rowBounds);
+		page.addAll(collection);
+		return page;
+	}
+
+	public static RowBounds rowBounds(long nextPage) {
+		return rowBounds(nextPage, DEFAULT_PAGE_SIZE, null);
 	}
 
 	public long getPageSize() {
@@ -113,6 +127,6 @@ public class Page<E> implements Serializable {
 	}
 
 	public List<E> list() {
-		return list;
+		return this;
 	}
 }

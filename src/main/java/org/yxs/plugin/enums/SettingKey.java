@@ -7,7 +7,6 @@ package org.yxs.plugin.enums;
 public enum SettingKey {
     DB_TYPE("type", "数据库类型"),
     METHOD("method", "需要分页处理的方法名"),
-    PAGE_KEY("key", "分页参数的key值"),
     PAGE_SIZE("size", "每页显示多少条")
     ;
 

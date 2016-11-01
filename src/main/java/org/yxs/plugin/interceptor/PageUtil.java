@@ -8,10 +8,10 @@ import org.apache.ibatis.reflection.MetaObject;
 import org.apache.ibatis.scripting.defaults.DefaultParameterHandler;
 import org.yxs.plugin.enums.DBType;
 import org.yxs.plugin.exception.PageParamTypeException;
-import org.yxs.plugin.exception.UnSetNextPageException;
 import org.yxs.plugin.exception.UnknownSQLException;
 import org.yxs.plugin.support.Page;
 import org.yxs.plugin.support.PageSQL;
+import org.yxs.plugin.support.RowBounds;
 import org.yxs.plugin.support.TotalSQL;
 
 import java.lang.reflect.InvocationTargetException;
@@ -22,7 +22,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -34,7 +33,6 @@ public class PageUtil {
 
     private static List<Pattern> PATTERNS = new ArrayList<>(Collections.singletonList(Pattern.compile(".*query*")));
     private static String DB_TYPE = DBType.MYSQL.getName();
-    private static String KEY = "NEXT_PAGE";
     public static Long PAGE_SIZE = Page.DEFAULT_PAGE_SIZE;
 
     public static long total(Invocation invocation, MappedStatement statement, BoundSql boundSql) throws SQLException {
@@ -86,29 +84,19 @@ public class PageUtil {
         }
     }
 
-    protected static void setKey(String key) {
-        if (isEmpty(key)) return;
-        KEY = key;
-    }
-
     protected static void setPageSize(String pageSize) {
         if (isEmpty(pageSize)) return;
         PAGE_SIZE = Long.valueOf(pageSize);
     }
 
-    public static String key() {
-        return KEY;
-    }
-
     @SuppressWarnings("unchecked")
     public static Page<Object> newPage(long total, Object paramObject) {
-        if (paramObject instanceof Map) {
-            Map<String, Object> param = (Map<String, Object>) paramObject;
-            Object nextPageObj = param.get(KEY);
-            if (null == nextPageObj) throw new UnSetNextPageException("the page param \"" + KEY + "\" is unset");
-            else return new Page<>(total, Long.valueOf(String.valueOf(nextPageObj)), PAGE_SIZE);
+        if (paramObject instanceof RowBounds) {
+            RowBounds rowBounds = (RowBounds) paramObject;
+            rowBounds.setRowCount(total);
+            return new Page<>(rowBounds);
         }
-        throw new PageParamTypeException("the page param type must be map");
+        throw new PageParamTypeException("the page param type must be org.yxs.plugin.support.RowBounds");
     }
 
     public static Connection getConnection(Invocation invocation) {

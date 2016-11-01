@@ -11,7 +11,6 @@ import org.yxs.plugin.enums.SettingKey;
 import org.yxs.plugin.support.Page;
 
 import java.sql.Connection;
-import java.util.List;
 import java.util.Properties;
 
 /**
@@ -40,7 +39,7 @@ public class FastPage implements Interceptor {
         //设置最终执行分页SQL
         PageUtil.page(handleObject, boundSql, page);
         //返回结果集
-        return page.adds((List) invocation.proceed());
+        return invocation.proceed();
     }
 
     public Object plugin(Object target) {
@@ -50,7 +49,6 @@ public class FastPage implements Interceptor {
     public void setProperties(Properties properties) {
         PageUtil.setDbType(properties.getProperty(SettingKey.DB_TYPE.getKey()));
         PageUtil.setMethods(properties.getProperty(SettingKey.METHOD.getKey()));
-        PageUtil.setKey(properties.getProperty(SettingKey.PAGE_KEY.getKey()));
         PageUtil.setPageSize(properties.getProperty(SettingKey.PAGE_SIZE.getKey()));
     }
 }
