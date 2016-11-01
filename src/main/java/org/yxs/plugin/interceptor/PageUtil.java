@@ -30,12 +30,12 @@ import java.util.regex.Pattern;
  * Created by medusa on 2016/10/21.
  * explain:
  */
-public class MybatisUtil {
+public class PageUtil {
 
     private static List<Pattern> PATTERNS = new ArrayList<>(Collections.singletonList(Pattern.compile(".*query*")));
     private static String DB_TYPE = DBType.MYSQL.getName();
     private static String KEY = "NEXT_PAGE";
-    private static Long PAGE_SIZE = 10L;
+    public static Long PAGE_SIZE = Page.DEFAULT_PAGE_SIZE;
 
     public static long total(Invocation invocation, MappedStatement statement, BoundSql boundSql) throws SQLException {
         String sql = boundSql.getSql();
@@ -117,11 +117,5 @@ public class MybatisUtil {
 
     public static boolean isEmpty(String str) {
         return (null == str || "".equals(str) || "".equals(str.replaceAll(" ", "")));
-    }
-
-    public static Object result(PreparedStatement proceed, Page<Object> page) throws SQLException {
-        proceed.getParameterMetaData();
-        proceed.getMetaData();
-        return proceed;
     }
 }

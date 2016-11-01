@@ -1,6 +1,7 @@
 package org.yxs.plugin.support;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -13,8 +14,10 @@ public class Page<E> implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+
+	public static long DEFAULT_PAGE_SIZE = 10L;
 	
-	private long pageSize = 10;//一页显示多少条
+	private long pageSize = DEFAULT_PAGE_SIZE;//一页显示多少条
 	
 	private long nextPage = 1;//第几页  初始为1
 	
@@ -24,7 +27,7 @@ public class Page<E> implements Serializable {
 	
 	private long pageNum;//从第几条开始查询分页
 	
-	private List<E> results;//分页返回的对象
+	private List<E> list;//分页返回的对象
 	
 	public Page() {}
 
@@ -34,19 +37,7 @@ public class Page<E> implements Serializable {
 	 * @param nextPage 第几页
 	 */
 	public Page(long pageCount, long nextPage) {
-		this.pageCount = pageCount;
-		
-		//计算最大页
-		this.maxPage = pageCount % this.pageSize == 0 ? pageCount / this.pageSize : pageCount / pageSize + 1;
-		
-		//计算当前需要从第几条开始分页
-		this.nextPage = nextPage < 1 ? this.nextPage = 1 : nextPage > this.maxPage ? this.maxPage : nextPage;
-		
-		//得到分页开始的记录数
-		this.pageNum = (this.nextPage - 1) * pageSize;
-		
-		//开始的记录数为负数则设为0
-		this.pageNum = this.pageNum >= 0 ? this.pageNum : 0;
+		this(pageCount, nextPage, DEFAULT_PAGE_SIZE);
 	}
 	
 	/**
@@ -69,6 +60,16 @@ public class Page<E> implements Serializable {
 		
 		//开始的记录数为负数则设为0
 		this.pageNum = this.pageNum >= 0 ? this.pageNum : 0;
+	}
+
+	public Page<E> add(E e) {
+		list.add(e);
+		return this;
+	}
+
+	public Page<E> adds(Collection<? extends E> collection) {
+		list.addAll(collection);
+		return this;
 	}
 
 	public long getPageSize() {
@@ -111,11 +112,7 @@ public class Page<E> implements Serializable {
 		this.pageNum = pageNum;
 	}
 
-	public List<E> getResults() {
-		return results;
-	}
-
-	public void setResults(List<E> results) {
-		this.results = results;
+	public List<E> list() {
+		return list;
 	}
 }
