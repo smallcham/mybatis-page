@@ -1,6 +1,6 @@
 package org.yxs.plugin.page.support;
 
-import java.util.ArrayList;
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -10,7 +10,7 @@ import java.util.List;
  * author 湛智
  * 时间：2014年9月16日
  */
-public class Page<E> extends ArrayList<E> {
+public class Page<E> implements Serializable {
 	/**
 	 * 
 	 */
@@ -35,6 +35,8 @@ public class Page<E> extends ArrayList<E> {
 	private boolean isHome;//是否首页
 
 	private boolean isLast;//是否尾页
+
+	private List<E> list;//分页内容
 	
 	public Page() {}
 
@@ -103,8 +105,18 @@ public class Page<E> extends ArrayList<E> {
 
 	public static <E> Page<E> asPage(RowBounds rowBounds, Collection<? extends E> collection) {
 		Page<E> page = new Page<>(rowBounds);
-		page.addAll(null == collection ? Collections.<E>emptyList() : collection);
+		page.adds(null == collection ? Collections.<E>emptyList() : collection);
 		return page;
+	}
+
+	public Page<E> adds(Collection<? extends  E> collection) {
+		this.getList().addAll(collection);
+		return this;
+	}
+
+	public Page<E> add(E e) {
+		this.getList().add(e);
+		return this;
 	}
 
 	public long getPageSize() {
@@ -179,7 +191,7 @@ public class Page<E> extends ArrayList<E> {
 		isLast = last;
 	}
 
-	public List<E> list() {
-		return this;
+	public List<E> getList() {
+		return list;
 	}
 }
