@@ -2,6 +2,7 @@ package org.yxs.plugin.page.support;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -102,7 +103,7 @@ public class Page<E> extends ArrayList<E> {
 
 	public static <E> Page<E> asPage(RowBounds rowBounds, Collection<? extends E> collection) {
 		Page<E> page = new Page<>(rowBounds);
-		page.addAll(collection);
+		page.addAll(null == collection ? Collections.<E>emptyList() : collection);
 		return page;
 	}
 
