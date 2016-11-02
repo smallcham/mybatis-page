@@ -14,7 +14,7 @@ public class PageSQL {
 
     static {
         SQL_POOL.put(DBType.MYSQL.getName(), "select * from (%s) $_paging limit %s, %s");
-        SQL_POOL.put(DBType.ORACLE.getName(), "select * from (select cur_sql_result.*, rownum rn from (%s) cur_sql_result  where rownum <= %s) where rn > %s");
+        SQL_POOL.put(DBType.ORACLE.getName(), "select * from ( select row_.*, rownum rownum_ from (%s) row_ ) where rownum_ > %s and rownum_ <= %s");
     }
 
     public static String get(String type) {

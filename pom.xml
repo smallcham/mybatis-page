@@ -4,7 +4,7 @@
 
   <groupId>org.yxs.plugin</groupId>
   <artifactId>mybatis-page-nodep</artifactId>
-  <version>1.0-RELEASES</version>
+  <version>1.2-RELEASES</version>
   <packaging>jar</packaging>
 
   <name>mybatis-page</name>
