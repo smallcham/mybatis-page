@@ -1,6 +1,5 @@
 package org.yxs.plugin.page.support;
 
-import org.apache.ibatis.type.Alias;
 import org.yxs.plugin.page.interceptor.PageUtil;
 
 /**
@@ -8,7 +7,6 @@ import org.yxs.plugin.page.interceptor.PageUtil;
  * explain:
  */
 
-@Alias("RowBounds")
 public class RowBounds {
     private long nextPage;
     private long pageSize = PageUtil.PAGE_SIZE;

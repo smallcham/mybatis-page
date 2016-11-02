@@ -20,12 +20,20 @@ public class Page<E> extends ArrayList<E> {
 	private long pageSize = DEFAULT_PAGE_SIZE;//一页显示多少条
 	
 	private long nextPage = 1;//第几页  初始为1
+
+	private long backPage = this.nextPage - 1;//上一页 初始为
 	
 	private long rowCount;//需要分页的总记录数
-	
+
+	private long homePage = 1;//首页 初始为1
+
 	private long maxPage;//最大页数
 	
 	private long pageNum;//从第几条开始查询分页
+
+	private boolean isHome;//是否首页
+
+	private boolean isLast;//是否尾页
 	
 	public Page() {}
 
@@ -56,12 +64,24 @@ public class Page<E> extends ArrayList<E> {
 		
 		//计算当前需要从第几条开始分页
 		this.nextPage = nextPage < 1 ? this.nextPage = 1 : nextPage > this.maxPage ? this.maxPage : nextPage;
-		
+
+		//上一页
+		this.backPage = this.nextPage - 1;
+
+		//首页
+		this.homePage = 1;
+
 		//得到分页开始的记录数
 		this.pageNum = (this.nextPage - 1) * pageSize;
 		
 		//开始的记录数为负数则设为0
 		this.pageNum = this.pageNum >= 0 ? this.pageNum : 0;
+
+		//判断是否为首页
+		this.isHome = this.nextPage == 1;
+
+		//判断是否为尾页
+		this.isLast = this.nextPage >= this.maxPage;
 	}
 
 	public static RowBounds rowBounds(long nextPage, long pageSize, Object object) {
@@ -102,6 +122,22 @@ public class Page<E> extends ArrayList<E> {
 		this.nextPage = nextPage;
 	}
 
+	public long getBackPage() {
+		return backPage;
+	}
+
+	public void setBackPage(long backPage) {
+		this.backPage = backPage;
+	}
+
+	public long getHomePage() {
+		return homePage;
+	}
+
+	public void setHomePage(long homePage) {
+		this.homePage = homePage;
+	}
+
 	public long getRowCount() {
 		return rowCount;
 	}
@@ -124,6 +160,22 @@ public class Page<E> extends ArrayList<E> {
 
 	public void setPageNum(long pageNum) {
 		this.pageNum = pageNum;
+	}
+
+	public boolean isHome() {
+		return isHome;
+	}
+
+	public void setHome(boolean home) {
+		isHome = home;
+	}
+
+	public boolean isLast() {
+		return isLast;
+	}
+
+	public void setLast(boolean last) {
+		isLast = last;
 	}
 
 	public List<E> list() {
