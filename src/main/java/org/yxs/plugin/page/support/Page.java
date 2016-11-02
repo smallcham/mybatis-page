@@ -1,6 +1,7 @@
 package org.yxs.plugin.page.support;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -61,6 +62,7 @@ public class Page<E> implements Serializable {
 	public Page(long rowCount, long nextPage, long pageSize) {
 		this.pageSize = pageSize;
 		this.rowCount = rowCount;
+		this.list = new ArrayList<>();
 		
 		//计算最大页
 		this.maxPage = rowCount % this.pageSize == 0 ? rowCount / this.pageSize : rowCount / pageSize + 1;
@@ -109,7 +111,7 @@ public class Page<E> implements Serializable {
 		return page;
 	}
 
-	public Page<E> adds(Collection<? extends  E> collection) {
+	public Page<E> adds(Collection<? extends E> collection) {
 		this.getList().addAll(collection);
 		return this;
 	}
