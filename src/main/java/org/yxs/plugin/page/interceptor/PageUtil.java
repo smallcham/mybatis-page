@@ -78,6 +78,7 @@ public class PageUtil {
     }
 
     static void setDbType(String dbType) {
+        if (!isEmpty(dbType)) dbType = dbType.toUpperCase();
         DB_TYPE = DBType.getName(dbType);
         if (DBType.UNKNOWN.getName().equals(DB_TYPE)) {
             throw new UnknownSQLException("not support the current sql");
