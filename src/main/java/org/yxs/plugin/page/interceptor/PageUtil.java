@@ -20,7 +20,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -31,7 +30,7 @@ import java.util.regex.Pattern;
  */
 public class PageUtil {
 
-    private static List<Pattern> PATTERNS = new ArrayList<>(Collections.singletonList(Pattern.compile(".*query*")));
+    private static List<Pattern> PATTERNS = new ArrayList<>();
     private static String DB_TYPE = DBType.MYSQL.getName();
     public static Long PAGE_SIZE = Page.DEFAULT_PAGE_SIZE;
 
