@@ -1,4 +1,4 @@
-package org.yxs.plugin.page.exception;
+package com.github.smallcham.plugin.page.exception;
 
 /**
  * Created by medusa on 2016/10/31.

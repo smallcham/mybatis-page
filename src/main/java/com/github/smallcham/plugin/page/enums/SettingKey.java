@@ -1,4 +1,4 @@
-package org.yxs.plugin.page.enums;
+package com.github.smallcham.plugin.page.enums;
 
 /**
  * Created by medusa on 2016/10/21.

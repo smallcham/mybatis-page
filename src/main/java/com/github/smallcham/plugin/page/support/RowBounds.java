@@ -1,6 +1,6 @@
-package org.yxs.plugin.page.support;
+package com.github.smallcham.plugin.page.support;
 
-import org.yxs.plugin.page.interceptor.PageUtil;
+import com.github.smallcham.plugin.page.interceptor.PageUtil;
 
 /**
  * Created by medusa on 2016/11/1.

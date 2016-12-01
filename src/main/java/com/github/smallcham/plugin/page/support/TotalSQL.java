@@ -1,6 +1,6 @@
-package org.yxs.plugin.page.support;
+package com.github.smallcham.plugin.page.support;
 
-import org.yxs.plugin.page.enums.DBType;
+import com.github.smallcham.plugin.page.enums.DBType;
 
 import java.util.HashMap;
 import java.util.Map;

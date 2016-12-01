@@ -1,4 +1,4 @@
-package org.yxs.plugin.page.support;
+package com.github.smallcham.plugin.page.support;
 
 import java.io.Serializable;
 import java.util.ArrayList;

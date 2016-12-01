@@ -1,18 +1,18 @@
-package org.yxs.plugin.page.interceptor;
+package com.github.smallcham.plugin.page.interceptor;
 
+import com.github.smallcham.plugin.page.exception.PageParamTypeException;
+import com.github.smallcham.plugin.page.support.PageSQL;
 import org.apache.ibatis.executor.parameter.ParameterHandler;
 import org.apache.ibatis.mapping.BoundSql;
 import org.apache.ibatis.mapping.MappedStatement;
 import org.apache.ibatis.plugin.Invocation;
 import org.apache.ibatis.reflection.MetaObject;
 import org.apache.ibatis.scripting.defaults.DefaultParameterHandler;
-import org.yxs.plugin.page.enums.DBType;
-import org.yxs.plugin.page.exception.PageParamTypeException;
-import org.yxs.plugin.page.exception.UnknownSQLException;
-import org.yxs.plugin.page.support.Page;
-import org.yxs.plugin.page.support.PageSQL;
-import org.yxs.plugin.page.support.RowBounds;
-import org.yxs.plugin.page.support.TotalSQL;
+import com.github.smallcham.plugin.page.enums.DBType;
+import com.github.smallcham.plugin.page.exception.UnknownSQLException;
+import com.github.smallcham.plugin.page.support.Page;
+import com.github.smallcham.plugin.page.support.RowBounds;
+import com.github.smallcham.plugin.page.support.TotalSQL;
 
 import java.lang.reflect.InvocationTargetException;
 import java.sql.Connection;
@@ -96,7 +96,7 @@ public class PageUtil {
             rowBounds.setRowCount(total);
             return new Page<>(rowBounds);
         }
-        throw new PageParamTypeException("the page param type must be org.yxs.plugin.page.support.RowBounds");
+        throw new PageParamTypeException("the page param type must be RowBounds");
     }
 
     private static Connection getConnection(Invocation invocation) {

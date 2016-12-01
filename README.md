@@ -15,7 +15,7 @@
 ####Maven依赖
 ```xml
 <dependency>
-    <groupId>org.yxs.plugin</groupId>
+    <groupId>com.github.smallcham</groupId>
     <artifactId>mybatis-page-nodep</artifactId>
     <version>1.4-RELEASES</version>
 </dependency>
@@ -24,7 +24,7 @@
 ####mybatis.xml配置文件, 在`configuration`标签内添加
 ```xml
 <plugins>
-    <plugin interceptor="org.yxs.plugin.page.interceptor.FastPage">
+    <plugin interceptor="FastPage">
     	<!-- 数据库类型（必须配至） -->
 		<property name="type" value="MYSQL"/>
 		<!-- 需要拦截的分页方法正则（必须配置） -->
@@ -57,7 +57,7 @@ public Page<Product> query(Product product, int nowPage) {
 
 productMapper.xml SQL编写
 ```xml
-<select id="query" resultMap="BaseResultMap" parameterType="org.yxs.plugin.page.support.RowBounds">
+<select id="query" resultMap="BaseResultMap" parameterType="com.github.smallcham.plugin.page.support.RowBounds">
 SELECT
 <include refid="Query_Column_List" />
 FROM product p, product_type pt
