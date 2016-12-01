@@ -17,7 +17,7 @@
 <dependency>
     <groupId>com.github.smallcham</groupId>
     <artifactId>mybatis-page-nodep</artifactId>
-    <version>1.4-RELEASES</version>
+    <version>1.5-RELEASES</version>
 </dependency>
 ```
 
