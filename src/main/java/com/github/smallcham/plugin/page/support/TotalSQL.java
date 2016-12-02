@@ -2,8 +2,11 @@ package com.github.smallcham.plugin.page.support;
 
 import com.github.smallcham.plugin.page.enums.DBType;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Created by medusa on 2016/10/21.
@@ -24,5 +27,11 @@ public class TotalSQL {
 
     public static String get(String type, String sql) {
         return String.format(get(type), sql);
+    }
+
+    public static void main(String[] args) {
+//        String sql = "select     asdjkasladjl, aasdamasd,asdas from(select * from asdasdas) as agent_agent         asda";
+//        System.out.println(SQLUtil.hasSubSelect(sql));
+//        System.out.println(SQLUtil.getTableName(sql));
     }
 }

@@ -103,7 +103,7 @@ public class PageUtil {
         return (Connection) invocation.getArgs()[0];
     }
 
-    private static boolean isEmpty(String str) {
+    public static boolean isEmpty(String str) {
         return (null == str || "".equals(str) || "".equals(str.replaceAll(" ", "")));
     }
 }

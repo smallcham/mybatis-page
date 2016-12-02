@@ -25,7 +25,7 @@
 ####mybatis.xml配置文件, 在`configuration`标签内添加
 ```xml
 <plugins>
-    <plugin interceptor="FastPage">
+    <plugin interceptor="com.github.smallcham.plugin.page.interceptor.FastPage">
     	<!-- 数据库类型（必须配至） -->
 		<property name="type" value="MYSQL"/>
 		<!-- 需要拦截的分页方法正则（必须配置） -->
