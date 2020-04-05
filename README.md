@@ -81,6 +81,3 @@ FROM product p, product_type pt
 ```
 <b>需要注意的是，sql中的查询参数使用都需要在前面加`v.` 如：`#{v.productName}`，这是因为RowBounds对象中封装了传入的参数对象</b>
 
-作者博客：  http://blog.csdn.net/a973893384
-
-作者邮箱：  973893384@163.com
